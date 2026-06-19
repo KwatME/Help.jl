@@ -20,7 +20,7 @@ function (@main)(ARGS)
 
     st = ARGS[1]
 
-    um = length(ARGS)
+    co = length(ARGS)
 
     if st == "log"
 
@@ -28,11 +28,11 @@ function (@main)(ARGS)
 
     elseif st == "template"
 
-        if um == 2
+        if co == 2
 
             Template.write(ARGS[2])
 
-        elseif isone(um)
+        elseif isone(co)
 
             Template.write()
 
