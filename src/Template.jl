@@ -6,8 +6,6 @@ using UUIDs: uuid4
 
 const PA = pkgdir(Template, "NAME.jl")
 
-const IN = length(PA) + 2
-
 function write(pa)
 
     cd(cp(PA, pa))
@@ -44,6 +42,8 @@ function write(s1, pa)
     return
 
 end
+
+const IN = length(PA) + 2
 
 function write()
 
