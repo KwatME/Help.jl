@@ -51,9 +51,9 @@ end
 
 function write()
 
-    nd = length(PA) + 2
-
     p1 = basename(pwd())
+
+    nd = length(PA) + 2
 
     for (p2, p1_, p2_) in walkdir(PA), p3_ in (p1_, p2_), p3 in p3_
 
