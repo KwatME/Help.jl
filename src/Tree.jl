@@ -17,7 +17,11 @@ function log()
 
         for p3_ in (p1_, p2_), p3 in p3_
 
-            if startswith(p3, '.') || !isone(count(isuppercase, p3))
+            if startswith(p3, '.')
+
+                @info "⚫️ $(joinpath(p2, p3))"
+
+            elseif !isone(count(isuppercase, p3))
 
                 @info "🟡 $(joinpath(p2, p3))"
 

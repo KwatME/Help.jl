@@ -4,18 +4,22 @@ using Base: write as Basewrite
 
 using UUIDs: uuid4
 
-const PA = pkgdir(Template, "NAME.jl")
+const S1 = "NAME"
+
+const S2 = "$S1.jl"
+
+const PA = pkgdir(Template, S2)
 
 function write(pa)
 
     cd(cp(PA, pa))
 
-    mv(joinpath("src", "NAME.jl"), joinpath("src", pa))
+    mv(joinpath("src", S2), joinpath("src", pa))
 
     run(
         pipeline(
             `find . -type f -print0`,
-            `xargs -0 sed -i '' -e s/NAME/$(splitext(pa)[1])/g -e s/11111111-1111-1111-1111-111111111111/$(uuid4())/g`,
+            `xargs -0 sed -i '' -e s/$S1/$(splitext(pa)[1])/g -e s/11111111-1111-1111-1111-111111111111/$(uuid4())/g`,
         ),
     )
 
@@ -25,17 +29,19 @@ end
 
 function write(s1, pa)
 
-    s2 = read(pa, String)
+    s2 = "# ---- #"
 
-    s3 = "$(split(s1, "# ---- #"; limit = 2)[1])# ---- #$(split(s2, "# ---- #"; limit = 2)[2])"
+    s3 = read(pa, String)
 
-    if s2 == s3
+    s4 = "$(split(s1, s2; limit = 2)[1])$s2$(split(s3, s2; limit = 2)[2])"
+
+    if s3 == s4
 
         return
 
     end
 
-    Basewrite(pa, s3)
+    Basewrite(pa, s4)
 
     @info "🍡 $pa"
 
@@ -43,9 +49,9 @@ function write(s1, pa)
 
 end
 
-const IN = length(PA) + 2
-
 function write()
+
+    nd = length(PA) + 2
 
     p1 = basename(pwd())
 
@@ -55,13 +61,13 @@ function write()
 
             continue
 
-        elseif p3 == "NAME.jl"
+        elseif p3 == S2
 
             p3 = p1
 
         end
 
-        p4 = joinpath(p2[IN:end], p3)
+        p4 = joinpath(p2[nd:end], p3)
 
         @assert ispath(p4) p4
 
@@ -69,10 +75,10 @@ function write()
 
     write(read(joinpath(PA, ".gitignore"), String), ".gitignore")
 
-    pa = "NAME" => splitext(p1)[1]
+    pa = S1 => splitext(p1)[1]
 
     write(
-        replace(read(joinpath(PA, "src", "NAME.jl"), String), pa),
+        replace(read(joinpath(PA, "src", S2), String), pa),
         joinpath("src", p1),
     )
 

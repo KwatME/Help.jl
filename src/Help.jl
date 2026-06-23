@@ -28,13 +28,13 @@ function (@main)(ARGS)
 
     elseif st == "template"
 
-        if co == 2
-
-            Template.write(ARGS[2])
-
-        elseif isone(co)
+        if isone(co)
 
             Template.write()
+
+        elseif co == 2
+
+            Template.write(ARGS[2])
 
         end
 
