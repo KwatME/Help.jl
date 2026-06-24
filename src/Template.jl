@@ -27,6 +27,7 @@ function write(pa)
 
 end
 
+# TODO: Use fu
 function write(s1, pa)
 
     s2 = "# ---- #"
@@ -55,21 +56,27 @@ function write()
 
     nd = length(PA) + 2
 
-    for (p2, p1_, p2_) in walkdir(PA), p3_ in (p1_, p2_), p3 in p3_
+    for (p2, p1_, p2_) in walkdir(PA)
 
-        if p3 == "Manifest.toml"
+        p3 = p2[nd:end]
 
-            continue
+        for p3_ in (p1_, p2_), p4 in p3_
 
-        elseif p3 == S2
+            if p4 == "Manifest.toml"
 
-            p3 = p1
+                continue
+
+            elseif p4 == S2
+
+                p4 = p1
+
+            end
+
+            p5 = joinpath(p3, p4)
+
+            @assert ispath(p5) p5
 
         end
-
-        p4 = joinpath(p2[nd:end], p3)
-
-        @assert ispath(p4) p4
 
     end
 

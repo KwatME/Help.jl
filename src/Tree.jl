@@ -2,6 +2,8 @@ module Tree
 
 function log()
 
+    nd = length(pwd()) + 2
+
     for (p1, p1_, p2_) in walkdir()
 
         if contains(p1, ".git") ||
@@ -13,21 +15,23 @@ function log()
 
         end
 
-        p2 = p1[(length(pwd()) + 2):end]
+        p2 = p1[nd:end]
 
         for p3_ in (p1_, p2_), p3 in p3_
 
+            p4 = joinpath(p2, p3)
+
             if startswith(p3, '.')
 
-                @info "⚫️ $(joinpath(p2, p3))"
+                @info "⚫️ $p4"
 
             elseif !isone(count(isuppercase, p3))
 
-                @info "🟡 $(joinpath(p2, p3))"
+                @info "🟡 $p4"
 
             end
 
-            p4 = replace(
+            p5 = replace(
                 p3,
                 r"^\s+" => "",
                 r"\s+$" => "",
@@ -67,9 +71,9 @@ function log()
                 r"(?<= )with(?= )"i => "with",
             )
 
-            if p3 != p4
+            if p3 != p5
 
-                @info "🔴 $p2\n$p3\n$p4"
+                @info "🔴 $p2\n$p3\n$p5"
 
             end
 
