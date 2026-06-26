@@ -1,9 +1,5 @@
 module Help
 
-const P1 = pkgdir(Help, "in")
-
-const P2 = pkgdir(Help, "ou")
-
 for pa in readdir(pkgdir(Help, "src"))
 
     if pa != "Help.jl"
@@ -18,9 +14,7 @@ end
 
 function (@main)(ARGS)
 
-    st = ARGS[1]
-
-    co = length(ARGS)
+    st = popfirst!(ARGS)
 
     if st == "log"
 
@@ -28,13 +22,13 @@ function (@main)(ARGS)
 
     elseif st == "template"
 
-        if isone(co)
+        if isempty(ARGS)
 
             Template.write()
 
-        elseif co == 2
+        elseif isone(length(ARGS))
 
-            Template.write(ARGS[2])
+            Template.write(ARGS[])
 
         end
 

@@ -6,10 +6,7 @@ function log()
 
     for (p1, p1_, p2_) in walkdir()
 
-        if contains(p1, ".git") ||
-                contains(p1, ".key") ||
-                contains(p1, ".numbers") ||
-                contains(p1, ".pages")
+        if any(occursin(p1), (".git", ".key", ".numbers", ".pages"))
 
             continue
 

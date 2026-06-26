@@ -27,72 +27,68 @@ function write(pa)
 
 end
 
-# TODO: Use fu
-function write(s1, pa)
-
-    s2 = "# ---- #"
-
-    s3 = read(pa, String)
-
-    s4 = "$(split(s1, s2; limit = 2)[1])$s2$(split(s3, s2; limit = 2)[2])"
-
-    if s3 == s4
-
-        return
-
-    end
-
-    Basewrite(pa, s4)
-
-    @info "🍡 $pa"
-
-    return
-
-end
-
 function write()
 
     p1 = basename(pwd())
 
     nd = length(PA) + 2
 
-    for (p2, p1_, p2_) in walkdir(PA)
+    for (p4, p1_, p2_) in walkdir(PA)
 
-        p3 = p2[nd:end]
+        p5 = p4[nd:end]
 
-        for p3_ in (p1_, p2_), p4 in p3_
+        for p3_ in (p1_, p2_), p6 in p3_
 
-            if p4 == "Manifest.toml"
+            if p6 == "Manifest.toml"
 
                 continue
 
-            elseif p4 == S2
+            elseif p6 == S2
 
-                p4 = p1
+                p6 = p1
 
             end
 
-            p5 = joinpath(p3, p4)
+            p7 = joinpath(p5, p6)
 
-            @assert ispath(p5) p5
+            @assert ispath(p7) p7
 
         end
 
     end
 
-    write(read(joinpath(PA, ".gitignore"), String), ".gitignore")
+    s1 = "# ---- #"
+
+    p2 = ".gitignore"
+
+    p3 = joinpath("test", "runtests.jl")
 
     pa = S1 => splitext(p1)[1]
 
-    write(
-        replace(read(joinpath(PA, "src", S2), String), pa),
-        joinpath("src", p1),
-    )
+    for (s2, p4) in (
+            (read(joinpath(PA, p2), String), p2),
+            (
+                replace(read(joinpath(PA, "src", S2), String), pa),
+                joinpath("src", p1),
+            ),
+            (replace(read(joinpath(PA, p3), String), pa), p3),
+        )
 
-    write(
-        replace(read(joinpath(PA, "test", "runtests.jl"), String), pa),
-        joinpath("test", "runtests.jl"),
-    )
+        s3 = read(p4, String)
+
+        s4 = "$(split(s2, s1; limit = 2)[1])$s1$(split(s3, s1; limit = 2)[2])"
+
+        if s3 == s4
+
+            continue
+
+        end
+
+        Basewrite(p4, s4)
+
+        @info "🍡 $p4"
+
+    end
 
     return
 
