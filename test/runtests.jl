@@ -1,6 +1,6 @@
 using Help
 
-for pa in readdir(pkgdir(Help, "test"))
+for pa in readdir()
 
     if pa == "runtests.jl"
 
@@ -8,7 +8,7 @@ for pa in readdir(pkgdir(Help, "test"))
 
     end
 
-    @info "🎬 $pa"
+    @info "🛫 $pa"
 
     run(`julia --project $pa`)
 

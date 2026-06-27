@@ -22,13 +22,15 @@ function (@main)(ARGS)
 
     elseif st == "template"
 
-        if isempty(ARGS)
+        co = length(ARGS)
 
-            Template.write()
-
-        elseif isone(length(ARGS))
+        if isone(co)
 
             Template.write(ARGS[])
+
+        elseif iszero(co)
+
+            Template.write()
 
         end
 
