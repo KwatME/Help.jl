@@ -14,25 +14,15 @@ end
 
 function (@main)(ARGS)
 
-    st = popfirst!(ARGS)
+    st = ARGS[1]
 
     if st == "log"
 
         Tree.log()
 
-    elseif st == "template"
+    elseif st == "write"
 
-        co = length(ARGS)
-
-        if isone(co)
-
-            Template.write(ARGS[])
-
-        elseif iszero(co)
-
-            Template.write()
-
-        end
+        Template.write(ARGS[2:end]...)
 
     end
 
