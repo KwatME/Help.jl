@@ -1,6 +1,6 @@
 module Template
 
-using Base: write as Basewrite
+using Base: read as Baseread, write as Basewrite
 
 using UUIDs: uuid4
 
@@ -31,11 +31,11 @@ function write()
 
     p1 = basename(pwd())
 
-    nd = length(PA) + 2
+    i1 = length(PA) + 2
 
     for (p4, p1_, p2_) in walkdir(PA)
 
-        p5 = p4[nd:end]
+        p5 = p4[i1:end]
 
         for p3_ in (p1_, p2_), p6 in p3_
 
@@ -59,32 +59,47 @@ function write()
 
     s1 = "# ---- #"
 
+    function string(s3, i2)
+
+        return split(s3, s1; limit = 2)[i2]
+
+    end
+
+    function read(p4)
+
+        return Baseread(joinpath(PA, p4), String)
+
+    end
+
+    s2 = splitext(p1)[1]
+
+    function string(s3)
+
+        return replace(s3, S1 => s2)
+
+    end
+
     p2 = ".gitignore"
 
     p3 = joinpath("test", "runtests.jl")
 
-    pa = S1 => splitext(p1)[1]
-
-    for (s2, p4) in (
-            (read(joinpath(PA, p2), String), p2),
-            (
-                replace(read(joinpath(PA, "src", S2), String), pa),
-                joinpath("src", p1),
-            ),
-            (replace(read(joinpath(PA, p3), String), pa), p3),
+    for (s3, p4) in (
+            (read(p2), p2),
+            (string(read(joinpath("src", S2))), joinpath("src", p1)),
+            (string(read(p3)), p3),
         )
 
-        s3 = read(p4, String)
+        s4 = Baseread(p4, String)
 
-        s4 = "$(split(s2, s1; limit = 2)[1])$s1$(split(s3, s1; limit = 2)[2])"
+        s5 = "$(string(s3, 1))$s1$(string(s4, 2))"
 
-        if s3 == s4
+        if s4 == s5
 
             continue
 
         end
 
-        Basewrite(p4, s4)
+        Basewrite(p4, s5)
 
         @info "🍡 $p4"
 
